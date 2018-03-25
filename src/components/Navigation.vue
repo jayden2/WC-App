@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <h1 class="title">Title</h1>
+    <h1 class="title">WC App</h1>
     <div class="user-info">
       <span v-if="user" class="user-email">{{ user.email }}</span>
       <router-link to="/login" v-if="!user">Login</router-link>
