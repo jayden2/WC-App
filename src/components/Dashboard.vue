@@ -1,16 +1,26 @@
 <template>
   <div class="dashboard">
-    <h3>Dashboard</h3>
+    <sub-navigation></sub-navigation>
+    <ladder></ladder>
+    <game-selection></game-selection>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Dashboard',
-  data () {
-    return {}
+  import SubNavigation from '@/components/SubNavigation';
+  import Ladder from '@/components/Ladder';
+  import GameSelection from '@/components/GameSelection';
+  export default {
+    name: 'Dashboard',
+    components: {
+      SubNavigation,
+      GameSelection,
+      Ladder
+    },
+    data () {
+      return {}
+    }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

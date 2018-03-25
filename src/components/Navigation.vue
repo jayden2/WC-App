@@ -2,7 +2,7 @@
   <nav>
     <h1 class="title">WC App</h1>
     <div class="user-info">
-      <span v-if="user" class="user-email">{{ user.email }}</span>
+      <span v-if="user" class="user-email">{{ user.displayName }}</span>
       <router-link to="/login" v-if="!user">Login</router-link>
       <router-link to="/signup" v-if="!user">Sign Up</router-link>
       <a href="#" @click="logout" v-if="user">Logout</a>

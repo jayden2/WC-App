@@ -1,10 +1,11 @@
 <template>
   <div class="sign-up">
       <h3>Create Account</h3>
+      <input type="text" v-model="name" placeholder="Name" />
       <input type="text" v-model="email" placeholder="Email" />
       <input type="password" v-model="password" placeholder="Password" />
       <p class="error">{{ message }}</p>
-      <button @click="signUp">Sign Up</button>
+      <button @click="signUp" :disabled="disable">Sign Up</button>
   </div>
 </template>
 
@@ -15,20 +16,37 @@
     name: 'signUp',
     data: function() {
       return {
+        name: '',
         email: '',
         password: '',
-        message: ''
+        message: '',
+        disable: false
       }
     },
     methods: {
-      signUp: function() {        
+      signUp: function() {
+        this.disable = true;
+        if (!this.name) {
+          this.disable = false;
+          return this.message = 'No name provided'
+        }
         firebase.auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then((user) => {
-            this.$router.replace('dashboard');
+            user.updateProfile({
+              displayName: this.name,
+            })
+            .then(() => {
+              this.$router.replace('dashboard');
+            })
+            .catch(function(error) {
+              this.message = 'Account Created, but something went wrong: ' + error.message;
+              this.disable = false;
+            });
           },
           (error) => {
             this.message = error.message;
+            this.disable = false;
           }
         );
       }
@@ -72,6 +90,9 @@
     &:hover,
     &:focus {
       background: darken(#3589bb, 5%);
+    }
+    &[disabled] {
+      background: grey;
     }
   }
   p {
