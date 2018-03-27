@@ -2,10 +2,7 @@
   <section>
     <h2>Game Selections</h2>
     <div>
-      <ul>
-        <li v-for="country in countries">{{ country }}</li>
-      </ul>
-      <game-selection-item></game-selection-item>
+      <game-selection-item :key="game.key" :countries="countries" :game="game" v-for="game in stage1"></game-selection-item>
     </div>
   </section>
 </template>
@@ -18,7 +15,9 @@
     name: 'GameSelection',
     data: function() {
       return {
-        countries: []
+        countries: [],
+        stadiums: [],
+        games: []
       }
     },
     components: {
@@ -27,10 +26,7 @@
     firebase: { 
       countries: db.ref('countries'),
       stadiums: db.ref('stadiums'),
-      games: {
-        source: db.ref('games'),
-        asObject: true
-      },
+      stage1: db.ref('games/stage_1'),
     },
     mounted: function() {
       return {
