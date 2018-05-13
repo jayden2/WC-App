@@ -1,7 +1,7 @@
 <template>
-  <div class="dashboard">
+  <div class="dashboard container">
     <sub-navigation></sub-navigation>
-    <ladder></ladder>
+    <!-- <ladder></ladder> -->
     <game-selection></game-selection>
   </div>
 </template>
