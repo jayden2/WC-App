@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard container">
-    <sub-navigation></sub-navigation>
+    <!-- <sub-navigation></sub-navigation> -->
     <!-- <ladder></ladder> -->
     <game-selection></game-selection>
   </div>
@@ -38,5 +38,9 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.dashboard {
+  padding-bottom: 15px;
 }
 </style>

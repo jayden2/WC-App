@@ -1,11 +1,17 @@
 <template>
   <nav>
-    <h1 class="title">WC App</h1>
-    <div class="user-info">
-      <span v-if="user" class="user-email">{{ user.displayName }}</span>
-      <router-link to="/login" v-if="!user">Login</router-link>
-      <router-link to="/signup" v-if="!user">Sign Up</router-link>
-      <a href="#" @click="logout" v-if="user">Logout</a>
+    <div class="container">
+      <h1 class="title">World Cup 2018</h1>
+      <div class="sub-nav">
+        <button class="btn btn-primary">Ladder</button>
+        <button class="btn btn-primary">Game Selections</button>
+      </div>
+      <div class="user-info">
+        <span v-if="user" class="user-email">{{ user.displayName }}</span>
+        <router-link to="/login" v-if="!user">Login</router-link>
+        <router-link to="/signup" v-if="!user">Sign Up</router-link>
+        <a href="#" @click="logout" v-if="user">Logout</a>
+      </div>
     </div>
   </nav>
 </template>
@@ -39,28 +45,36 @@
 </script>
 
 <style lang="scss" scoped>
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
   .title {
-    display: inline;
     color: white;
     font-size: 1.4em;
-    margin: 0;
+    font-weight: bold;
   }
   nav {
     color: white;
-    position: relative;
     background: black;
-    margin: 0;
     padding: 18px;
-    top: 0;
 
-    &:after {
-      clear: both;
+    .sub-nav {
+      button {
+        background: #3589bb;
+        padding: 10px 40px;
+
+        &:hover,
+        &:focus {
+            background: darken(#3589bb, 5%);
+        }
+      }
     }
 
     .user-info {
-      float: right;
-      margin-bottom: 15px;
-
       .user-email {
         font-size: 0.95em;
         border-right: solid 1.5px white;

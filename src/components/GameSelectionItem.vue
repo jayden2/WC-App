@@ -1,22 +1,24 @@
 <template>
   <div class="game-card">
-    <div class="header">
-      <h5 class="game">Game {{ game['.key'] }}</h5>
+    <div class="header" :class="{ selected: selected }">
+      <h5 class="game">G{{ game['.key'] }}: {{ country_1 }} vs {{ country_2 }}</h5>
     </div>
     <div class="game-card-body">
-      <div class="game-information">
-        <div class="game-info">
+      <div class="game-info">
+        <div>
           <p class="group">Group {{ game.group }}</p>
-          <p class="datetime">{{ game.date }} {{ game.time }}</p>
+          <p class="datetime">{{ game.date }}</p>
+        </div>
+        <div>
           <p class="stadium">{{ place.stadium }}</p>
           <p class="location">{{ place.location }}</p>
         </div>
       </div>
       <div class="game-picker">
-        <span v-if="selected">Selected {{ selected }}</span> 
-        <div class="btn-group-vertical" v-if="!selected">
+        <p v-if="selected" class="selected-item">Selected {{ selected }}</p> 
+        <div class="btn-group" v-if="!selected">
           <button type="button" class="btn btn-primary" @click="selectCountry(country_1)">{{ country_1 }}</button>
-          <button type="button" class="btn btn-primary" @click="selectCountry('draw')">Draw</button>
+          <button type="button" class="btn btn-primary draw" @click="selectCountry('draw')">Draw</button>
           <button type="button" class="btn btn-primary" @click="selectCountry(country_2)">{{ country_2 }}</button>
         </div>
       </div>
@@ -57,7 +59,11 @@
     },
     watch: {
       selection: function(val) {
-        if (val.length > this.gameId) this.selected = val[this.gameId -1]['.value'];
+        if (this.selection.length) {
+          val.forEach(element => {
+            if (element['.key'] == (this.gameId)) this.selected = element['.value'];
+          });
+        }
       }
     }
   }
@@ -65,32 +71,52 @@
 
 <style lang="scss" scoped>
   .game-card {
-    margin: 20px auto;
     background-color: whitesmoke;
-    width: 55rem;
-    border-radius: 5px;
-  }
-  .game-card-body {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 50px 15px 10px;
+    margin-top: 15px;
+    width: 30%;
   }
   .header {
     color: white;
-    background: grey;
+    background: rgb(100, 98, 98);
     padding: 10px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  .game-picker {
-    width: 25rem;
-    float: right;
-    
-    .btn-group-vertical {
-      width: 100%;
+
+    .game {
+      font-size: 1em;
+      margin: 0;
+    }
+
+    &.selected {
+      // background: darken(#2c7caa, 5%);
     }
   }
+  .game-picker {
+    width: 100%;
+    
+    .btn-group {
+      width: 100%;
+
+      .btn {
+        border-radius: 0;
+        flex-grow: 1;
+        padding: 10px;
+      }
+    }
+
+    .selected-item {
+      background: darken(#2c7caa, 5%);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      width: 100%;
+      margin: 0;
+    }
+
+  }
   .game-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+
     p {      
       margin-top: 0;
       margin-bottom: 5px;
@@ -109,6 +135,7 @@
     .location {
       color: rgb(80, 79, 79);
       font-size: 0.82em;
+      text-align: right;
       text-transform: capitalize;
     }
   }

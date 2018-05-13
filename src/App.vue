@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <navigation></navigation>
-    <div class="container">
-      <router-view/>
-    </div>
+    <router-view/>
   </div>
 </template>
 
@@ -33,7 +31,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
   .container {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 </style>
