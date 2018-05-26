@@ -1,31 +1,47 @@
 <template>
-  <section>
-    <h2>Ladder</h2>
-    <div>
-      <ladder-item></ladder-item>
+  <main>
+    <header>
+      <h2 class="title">Ladder</h2>
+    </header>
+    <div class="grid">
+      <ladder-item :key="selectUser['.key']" :selectedUser="selectUser['.key']" :winners="winners" v-for="selectUser in selections"></ladder-item>
     </div>
-  </section>
+  </main>
 </template>
 
 <script>
   import LadderItem from '@/components/LadderItem'
+  import { db } from '../firebase';
 
   export default {
-    name: 'VoteCard',
+    name: 'Ladder',
     components: {
       LadderItem
     },
-    data () {
+    data: function() {
       return {
-          items: {
-              id: '0',
-              name: 'Jayden'
-          }
+      }
+    },
+    firebase: { 
+      selections: db.ref('selections'),
+      winners: db.ref('winners'),
+    },
+    computed: {
+      user() {
+        return this.$store.getters.getUser;
+      }
+    },
+    mounted: function() {
+      return {
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-
+  .title {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+  }
 </style>

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import firebase from 'firebase'
-import Dashboard from '@/components/Dashboard'
+import SelectionDashboard from '@/components/SelectionDashboard'
+import LadderDashboard from '@/components/LadderDashboard'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Ladder from '@/components/Ladder'
@@ -33,7 +34,7 @@ let router = new Router({
     {
       path: '/dashboard',
       name: 'Dashboard',
-      component: Dashboard,
+      component: SelectionDashboard,
       meta: {
         requiresAuth: true
       }
@@ -41,7 +42,7 @@ let router = new Router({
     {
       path: '/dashboard/ladder',
       name: 'Ladder',
-      component: Dashboard,
+      component: LadderDashboard,
       meta: {
         requiresAuth: true
       }
@@ -49,7 +50,7 @@ let router = new Router({
     {
       path: '/dashboard/selections',
       name: 'GameSelection',
-      component: Dashboard,
+      component: SelectionDashboard,
       meta: {
         requiresAuth: true
       }

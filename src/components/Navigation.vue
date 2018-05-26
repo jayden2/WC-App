@@ -3,8 +3,8 @@
     <div class="container">
       <h1 class="title">World Cup 2018</h1>
       <div class="sub-nav">
-        <button class="btn btn-primary">Ladder</button>
-        <button class="btn btn-primary">Game Selections</button>
+        <router-link class="btn btn-primary" to="/dashboard/ladder" v-if="user">Ladder</router-link>
+        <router-link class="btn btn-primary" to="/dashboard/selections" v-if="user">Game Selections</router-link>
       </div>
       <div class="user-info">
         <span v-if="user" class="user-email">{{ user.displayName }}</span>

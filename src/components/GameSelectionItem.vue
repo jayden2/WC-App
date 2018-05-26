@@ -32,7 +32,7 @@
 
   export default {
     name: 'GameSelectionItem',
-    props: ['countries','game', 'stadiums', 'uid'],
+    props: ['countries','game', 'stadiums', 'email'],
     data () {
       return {
         country_1: this.countries[this.game.country_1 -1]['.value'],
@@ -47,7 +47,8 @@
       addSelection: function() {
         let obj = {};
         obj[this.game['.key']] = this.selected;
-        db.ref(`selections/${this.uid}`).update(obj);
+        const email = this.email.replace(/\./g, '*');
+        db.ref(`selections/${email}`).update(obj);
       },
       selectCountry: function(choice) {
         this.selected = choice;
@@ -55,7 +56,8 @@
       },
     },
     beforeMount: function() {
-      this.$bindAsArray('selection', db.ref(`selections/${this.uid}/`));
+      const email = this.email.replace(/\./g, '*');
+      this.$bindAsArray('selection', db.ref(`selections/${email}/`));
     },
     watch: {
       selection: function(val) {

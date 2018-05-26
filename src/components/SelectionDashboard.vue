@@ -1,24 +1,20 @@
 <template>
   <div class="dashboard container">
-    <!-- <sub-navigation></sub-navigation> -->
-    <!-- <ladder></ladder> -->
     <game-selection></game-selection>
   </div>
 </template>
 
 <script>
-  import SubNavigation from '@/components/SubNavigation';
-  import Ladder from '@/components/Ladder';
   import GameSelection from '@/components/GameSelection';
   export default {
-    name: 'Dashboard',
+    name: 'SlectionDashboard',
     components: {
-      SubNavigation,
-      GameSelection,
-      Ladder
+      GameSelection
     },
     data () {
-      return {}
+      return {
+        
+      }
     }
   }
 </script>
