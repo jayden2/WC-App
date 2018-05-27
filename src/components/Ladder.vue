@@ -4,18 +4,17 @@
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
-          <th scope="col">User</th>
+          <th scope="col"><a href="#" @click="sortByName">User</a></th>
           <th scope="col" class="text-center">Played(Selected)</th>
-          <th scope="col" class="text-center" @click="sortByWins">Won</th>
-          <th scope="col" class="text-center">Lost</th>
+          <th scope="col" class="text-center"><a href="#" @click="sortByWins">Won</a></th>
+          <th scope="col" class="text-center"><a href="#" @click="sortByLost">Lost</a></th>
           <th scope="col" class="text-center">WP</th>
         </tr>
       </thead>
       <tbody>
-        <ladder-item @winAmount="winAmountChild" :key="selectUser['.key']" :selectedUser="selectUser['.key']" :winners="winners" :index="index" v-for="(selectUser, index) in sortByWins"></ladder-item>
+        <ladder-item @winAmount="winAmountChild" :key="selectUser['.key']" :selectedUser="selectUser['.key']" :winners="winners" :index="index" v-for="(selectUser, index) in basicSelection"></ladder-item>
       </tbody>
     </table>
-    <span :key="index" v-for="(selectUser, index) in selections">{{selectUser.wins}}</span>
   </main>
 </template>
 
@@ -30,6 +29,7 @@
     },
     data: function() {
       return {
+        sortType: 'aplhabetical',
       }
     },
     firebase: { 
@@ -40,7 +40,7 @@
       user() {
         return this.$store.getters.getUser;
       },
-      sortByWins() {
+      basicSelection() {
         let selections = []
         this.selections.forEach(selection => {
           
@@ -58,10 +58,32 @@
         this.selections.forEach(selection => {
           if (selection['.key'] === value.selectedUser) {
             selection['wins'] = value.won;
+            // selection['winPercentage'] = value.winPercentage;
           }
         });
-        console.log(this.selections);
-        this.sortByWins;
+      },
+      sortByName: function() {
+        this.selections.sort(function(a, b) {
+          return b['.key'] < a['.key'];
+        });
+        this.sortType = 'aplhabetical';
+      },
+      sortByWins: function() {
+        this.selections.sort(function(a, b) {
+          return b.wins - a.wins;
+        });
+        this.sortType = 'wins';
+      },
+      sortByLost: function() {
+        this.selections.sort(function(a, b) {
+          return a.wins - b.wins;
+        });
+        this.sortType = 'lost';
+      },
+      sortByWinPercentage: function() {
+        this.selections.sort(function(a, b) {
+          return b.winPercentage - a.winPercentage;
+        });
       },
     },
   }
@@ -70,5 +92,11 @@
 <style lang="scss" scoped>
   .table {
     margin-top: 15px;
+  }
+  a {
+    color: #fff;
+    &:hover {
+      color: #007bff;
+    }
   }
 </style>

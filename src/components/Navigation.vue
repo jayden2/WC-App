@@ -72,6 +72,11 @@
             background: darken(#3589bb, 5%);
         }
       }
+      .router-link-exact-active {
+          border: solid 3px #3598bb;
+          background: transparent;
+          box-shadow: none;
+        }
     }
 
     .user-info {
