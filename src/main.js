@@ -4,6 +4,7 @@ import Vue from 'vue'
 import VueFire from 'vuefire'
 import Vuex from 'vuex'
 import Firebase from 'firebase'
+import Vue2Filters from 'vue2-filters'
 
 import App from './App'
 import './firebase'
@@ -13,6 +14,8 @@ import { store } from './store'
 Vue.config.productionTip = false
 
 Vue.use(VueFire)
+
+Vue.use(Vue2Filters)
 
 Firebase.auth().onAuthStateChanged(function(user) {
   new Vue({
