@@ -1,25 +1,24 @@
 <template>
   <div class="game-card">
     <div class="header" :class="{ selected: selected }">
-      <h5 class="game">G{{ game['.key'] }}: {{ country_1 }} vs {{ country_2 }}</h5>
+      <h5 class="game">G{{ game.game }}: {{ game.country_1 }} vs {{ game.country_2 }}</h5>
     </div>
     <div class="game-card-body">
       <div class="game-info">
         <div>
           <p class="group">Group {{ game.group }}</p>
-          <p class="datetime">{{ game.date }}</p>
+          <p class="datetime">{{ game.datetime | moment('timezone', 'Australia/Perth', "dddd, Do MMM, h:mma") }}</p>
         </div>
         <div>
-          <p class="stadium">{{ place.stadium }}</p>
-          <p class="location">{{ place.location }}</p>
+          <p class="stadium">{{ game.stadium }}</p>
         </div>
       </div>
       <div class="game-picker">
         <p v-if="selected" class="selected-item">Selected {{ selected }}</p> 
         <div class="btn-group" v-if="!selected">
-          <button type="button" class="btn btn-primary" @click="selectCountry(country_1)">{{ country_1 }}</button>
+          <button type="button" class="btn btn-primary" @click="selectCountry(game.country_1)">{{ game.country_1 }}</button>
           <button type="button" class="btn btn-primary draw" @click="selectCountry('draw')">Draw</button>
-          <button type="button" class="btn btn-primary" @click="selectCountry(country_2)">{{ country_2 }}</button>
+          <button type="button" class="btn btn-primary" @click="selectCountry(game.country_2)">{{ game.country_2 }}</button>
         </div>
       </div>
     </div>
@@ -32,21 +31,17 @@
 
   export default {
     name: 'GameSelectionItem',
-    props: ['countries','game', 'stadiums', 'email'],
+    props: ['game', 'email'],
     data () {
       return {
-        country_1: this.countries[this.game.country_1 -1]['.value'],
-        country_2: this.countries[this.game.country_2 -1]['.value'],
-        place: this.stadiums[this.game.place],
         selected: null,
-        selection: null,
-        gameId: this.game['.key'],
+        selection: null
       }
     },
     methods: {
       addSelection: function() {
         let obj = {};
-        obj[this.game['.key']] = this.selected;
+        obj[this.game.game] = this.selected;
         const email = this.email.replace(/\./g, '*');
         db.ref(`selections/${email}`).update(obj);
       },
@@ -63,7 +58,7 @@
       selection: function(val) {
         if (this.selection.length) {
           val.forEach(element => {
-            if (element['.key'] == (this.gameId)) this.selected = element['.value'];
+            if (element['.key'] == (this.game.game)) this.selected = element['.value'];
           });
         }
       }
@@ -75,7 +70,7 @@
   .game-card {
     background-color: whitesmoke;
     margin-top: 15px;
-    width: 30%;
+    width: 100%;
   }
   .header {
     color: white;
@@ -139,6 +134,22 @@
       font-size: 0.82em;
       text-align: right;
       text-transform: capitalize;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .game-card {
+    background-color: whitesmoke;
+    margin-top: 15px;
+    width: 48%;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .game-card {
+    background-color: whitesmoke;
+    margin-top: 15px;
+    width: 30%;
     }
   }
 </style>

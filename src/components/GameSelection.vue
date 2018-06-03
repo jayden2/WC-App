@@ -5,7 +5,7 @@
         <h2 class="title">Round 1</h2>
       </header>
       <div class="grid">
-        <game-selection-item :key="game.key" :email="user.email" :countries="countries" :stadiums="stadiums" :game="game" v-for="game in round1"></game-selection-item>
+        <game-selection-item :key="game.key" :email="user.email" :game="game" v-for="game in round1"></game-selection-item>
       </div>
     </section>
     <section v-if="round2">
@@ -13,7 +13,7 @@
         <h2 class="title">Round 2</h2>
       </header>
       <div class="grid">
-        <game-selection-item :key="game.key" :email="user.email" :countries="countries" :stadiums="stadiums" :game="game" v-for="game in round2"></game-selection-item>
+        <game-selection-item :key="game.key" :email="user.email" :game="game" v-for="game in round2"></game-selection-item>
       </div>
     </section>
     <section v-if="round3">
@@ -21,7 +21,7 @@
         <h2 class="title">Round 3</h2>
       </header>
       <div class="grid">
-        <game-selection-item :key="game.key" :email="user.email" :countries="countries" :stadiums="stadiums" :game="game" v-for="game in round3"></game-selection-item>
+        <game-selection-item :key="game.key" :email="user.email" :game="game" v-for="game in round3"></game-selection-item>
       </div>
     </section>
     <section v-if="round16">
@@ -29,7 +29,7 @@
         <h2 class="title">Round of 16</h2>
       </header>
       <div class="grid">
-        <game-selection-item :key="game.key" :email="user.email" :countries="countries" :stadiums="stadiums" :game="game" v-for="game in round16"></game-selection-item>
+        <game-selection-item :key="game.key" :email="user.email" :game="game" v-for="game in round16"></game-selection-item>
       </div>
     </section>
     <section v-if="quaterfinal">
@@ -37,7 +37,7 @@
         <h2 class="title">Quater Finals</h2>
       </header>
       <div class="grid">
-        <game-selection-item :key="game.key" :email="user.email" :countries="countries" :stadiums="stadiums" :game="game" v-for="game in quaterfinal"></game-selection-item>
+        <game-selection-item :key="game.key" :email="user.email" :game="game" v-for="game in quaterfinal"></game-selection-item>
       </div>
     </section>
     <section v-if="semifinal">
@@ -45,7 +45,7 @@
         <h2 class="title">Semi Finals</h2>
       </header>
       <div class="grid">
-        <game-selection-item :key="game.key" :email="user.email" :countries="countries" :stadiums="stadiums" :game="game" v-for="game in semifinal"></game-selection-item>
+        <game-selection-item :key="game.key" :email="user.email" :game="game" v-for="game in semifinal"></game-selection-item>
       </div>
     </section>
     <section v-if="thirdplace">
@@ -53,7 +53,7 @@
         <h2 class="title">Third Place</h2>
       </header>
       <div class="grid">
-        <game-selection-item :key="game.key" :email="user.email" :countries="countries" :stadiums="stadiums" :game="game" v-for="game in thirdplace"></game-selection-item>
+        <game-selection-item :key="game.key" :email="user.email" :game="game" v-for="game in thirdplace"></game-selection-item>
       </div>
     </section>
     <section v-if="final">
@@ -61,7 +61,7 @@
         <h2 class="title">Finals</h2>
       </header>
       <div class="grid">
-        <game-selection-item :key="game.key" :email="user.email" :countries="countries" :stadiums="stadiums" :game="game" v-for="game in final"></game-selection-item>
+        <game-selection-item :key="game.key" :email="user.email" :game="game" v-for="game in final"></game-selection-item>
       </div>
     </section>
   </main>
@@ -77,23 +77,17 @@
       GameSelectionItem
     },
     data: function() {
-      return {
-        countries: [],
-        stadiums: [],
-        games: [],
-      }
+      return {}
     },
     firebase: { 
-      countries: db.ref('countries'),
-      stadiums: db.ref('stadiums'),
       round1: db.ref('games/stage_1'),
       round2: db.ref('games/stage_2'),
       round3: db.ref('games/stage_3'),
-      round16: db.ref('games/stage_4'),
-      quaterfinal: db.ref('games/stage_5'),
-      semifinal: db.ref('games/stage_6'),
-      thirdplace: db.ref('games/stage_7'),
-      final: db.ref('games/stage_8'),
+      round16: db.ref('games/round_16'),
+      quaterfinal: db.ref('games/quarter_finals'),
+      semifinal: db.ref('games/semi_finals'),
+      thirdplace: db.ref('games/third_place'),
+      final: db.ref('games/finals'),
     },
     computed: {
       user() {
