@@ -8,6 +8,14 @@
         <router-link class="btn btn-outline-primary" to="/dashboard/selections/finals" v-if="user">Finals</router-link>
       </div>
     </nav>
+    <section v-if="round1">
+      <header>
+        <h2 class="title">Round 1</h2>
+      </header>
+      <div class="grid">
+        <game-selection-item :key="game.key" :email="user.email" :winners="winners" :game="game" v-for="game in round1"></game-selection-item>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -16,7 +24,7 @@
   import { db } from '../firebase';
 
   export default {
-    name: 'GameSelection',
+    name: 'GameSelectionRound1',
     components: {
       GameSelectionItem
     },
@@ -24,6 +32,8 @@
       return {}
     },
     firebase: { 
+      round1: db.ref('games/stage_1'),
+      winners: db.ref('winners'),
     },
     computed: {
       user() {

@@ -54,11 +54,15 @@
         this.addSelection();
       },
       winnerPicked: function() {
+        let winLose = '';
         if (this.winners.length && this.selected) {
-          const winner = this.winners[this.game.game];
-          if (!winner) return '';
-          return (this.selected === winner['.value']) ? 'win' : 'lose';
+          this.winners.forEach(item => {
+            if (item['.key'] === this.game.game) {
+              return winLose = (this.selected === item['.value']) ? 'win' : 'lose';
+            }
+          });
         }
+        return winLose;
       },
     },
     computed: {

@@ -8,6 +8,10 @@ import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Ladder from '@/components/Ladder'
 import GameSelection from '@/components/GameSelection'
+import GameSelectionRound1 from '@/components/GameSelectionRound1'
+import GameSelectionRound2 from '@/components/GameSelectionRound2'
+import GameSelectionRound3 from '@/components/GameSelectionRound3'
+import GameSelectionFinals from '@/components/GameSelectionFinals'
 
 Vue.use(Router)
 
@@ -51,6 +55,38 @@ let router = new Router({
       path: '/dashboard/selections',
       name: 'GameSelection',
       component: SelectionDashboard,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/dashboard/selections/round1',
+      name: 'GameSelectionRound1',
+      component: GameSelectionRound1,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/dashboard/selections/round2',
+      name: 'GameSelectionRound2',
+      component: GameSelectionRound2,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/dashboard/selections/round3',
+      name: 'GameSelectionRound3',
+      component: GameSelectionRound3,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/dashboard/selections/finals',
+      name: 'GameSelectionFinals',
+      component: GameSelectionFinals,
       meta: {
         requiresAuth: true
       }
