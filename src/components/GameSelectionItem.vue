@@ -1,23 +1,24 @@
 <template>
-  <div class="game-card">
+  <div class="game-card" v-if="!hidden">
     <div class="header" :class="{ selected: selected }">
-      <h5 class="game">G{{ game.game }}: {{ game.country_1 }} vs {{ game.country_2 }}</h5>
+      <h5 class="countries">{{ game.country_1 }} vs {{ game.country_2 }}</h5>
     </div>
     <div class="game-card-body">
       <div class="game-info">
         <div>
-          <p class="group">Group {{ game.group }}</p>
+          <p>Game {{ game.game }}<span v-if="!timeLeft"> - Played</span></p>
           <p class="datetime">{{ game.datetime | moment('timezone', 'Australia/Perth', "dddd, Do MMM, h:mma") }}</p>
-        </div>
-        <div>
           <p class="stadium">{{ game.stadium }}</p>
+        </div>
+        <div v-if="game.group">
+          <p class="group">Group {{ game.group }}</p>
         </div>
       </div>
       <div class="game-picker">
-        <p v-if="selected" class="selected-item">Selected {{ selected }}</p> 
-        <div class="btn-group" v-if="!selected">
+        <p v-if="selected" class="selected-item" :class="winnerPicked()">Selected {{ selected }}</p> 
+        <div class="btn-group" v-if="!selected && timeLeft">
           <button type="button" class="btn btn-primary" @click="selectCountry(game.country_1)">{{ game.country_1 }}</button>
-          <button type="button" class="btn btn-primary draw" @click="selectCountry('draw')">Draw</button>
+          <button type="button" class="btn btn-primary draw" @click="selectCountry('Draw')">Draw</button>
           <button type="button" class="btn btn-primary" @click="selectCountry(game.country_2)">{{ game.country_2 }}</button>
         </div>
       </div>
@@ -28,12 +29,14 @@
 <script>
   import firebase from 'firebase';
   import { db } from '../firebase';
+  import moment from 'moment';
 
   export default {
     name: 'GameSelectionItem',
-    props: ['game', 'email'],
+    props: ['game', 'email', 'winners',],
     data () {
       return {
+        hidden: true,
         selected: null,
         selection: null
       }
@@ -49,6 +52,21 @@
         this.selected = choice;
         this.addSelection();
       },
+      winnerPicked: function() {
+        if (this.winners.length && this.selected) {
+          const winner = this.winners[this.game.game];
+          if (!winner) return '';
+          return (this.selected === winner['.value']) ? 'win' : 'lose';
+        }
+      },
+    },
+    computed: {
+      timeLeft: function() {
+        const date = moment(this.game.datetime);
+        const now = moment();
+
+        return (now > date) ? false : true;
+      },
     },
     beforeMount: function() {
       const email = this.email.replace(/\./g, '*');
@@ -58,8 +76,11 @@
       selection: function(val) {
         if (this.selection.length) {
           val.forEach(element => {
-            if (element['.key'] == (this.game.game)) this.selected = element['.value'];
+            if (element['.key'] == (this.game.game)) {
+              return this.selected = element['.value'];
+            }
           });
+          this.hidden = false;
         }
       }
     }
@@ -71,21 +92,22 @@
     background-color: whitesmoke;
     margin-top: 15px;
     width: 100%;
-  }
-  .header {
-    color: white;
-    background: rgb(100, 98, 98);
-    padding: 10px;
 
-    .game {
-      font-size: 1em;
-      margin: 0;
+    .header {
+      color: white;
+      background: rgb(66, 65, 65);
+      padding: 10px;
+
+      .countries {
+        font-size: 1em;
+        margin: 0;
+        text-align: center;
+        font-weight: bold;
+      }
     }
 
-    &.selected {
-      // background: darken(#2c7caa, 5%);
-    }
   }
+
   .game-picker {
     width: 100%;
     
@@ -106,6 +128,13 @@
       padding: 10px;
       width: 100%;
       margin: 0;
+
+      &.win {
+        background: rgb(71, 185, 71);
+      }
+      &.lose {
+        background: rgb(196, 76, 76);
+      }
     }
 
   }
@@ -132,7 +161,6 @@
     .location {
       color: rgb(80, 79, 79);
       font-size: 0.82em;
-      text-align: right;
       text-transform: capitalize;
     }
   }
