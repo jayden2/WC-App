@@ -43,6 +43,7 @@
     },
     methods: {
       addSelection: function() {
+        if (!this.timeLeft) return;
         let obj = {};
         obj[this.game.game] = this.selected;
         const email = this.email.replace(/\./g, '*');
