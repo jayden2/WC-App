@@ -1,6 +1,4 @@
-# test
-
-> A Vue.js project
+# World Cup Game Selection App
 
 ## Build Setup
 
@@ -18,4 +16,20 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+##### config/dev.env.js
+```
+'use strict'
+const merge = require('webpack-merge')
+const prodEnv = require('./prod.env')
+
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"',
+  API_KEY: '""',
+  AUTH_DOMAIN: '"-.firebaseapp.com"',
+  DATABASE_URL: '"https://-.firebaseio.com"',
+  PROJECT_ID: '"-"',
+  STORAGE_BUCKET: '"-.appspot.com"',
+  MESSAGING_SENDER_ID: '"-"',
+})
+```
