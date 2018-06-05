@@ -1,9 +1,9 @@
 <template>
-  <div class="sign-up">
+  <div class="sign-up container">
       <h3>Create Account</h3>
-      <input type="text" v-model="name" placeholder="Name" />
-      <input type="text" v-model="email" placeholder="Email" />
-      <input type="password" v-model="password" placeholder="Password" />
+      <input type="text" v-model="name" placeholder="Name" @keyup.enter="login" />
+      <input type="text" v-model="email" placeholder="Email" @keyup.enter="login" />
+      <input type="password" v-model="password" placeholder="Password" @keyup.enter="signUp" />
       <p class="error">{{ message }}</p>
       <button @click="signUp" :disabled="disable">Sign Up</button>
   </div>

@@ -1,8 +1,8 @@
 <template>
-  <div class="login">
+  <div class="login container">
     <h3>Sign In</h3>
-    <input type="text" v-model="email" placeholder="Email" />
-    <input type="password" v-model="password" placeholder="Password" />
+    <input type="text" v-model="email" placeholder="Email" @keyup.enter="login" />
+    <input type="password" v-model="password" placeholder="Password" @keyup.enter="login" />
     <p class="error">{{ message }}</p>
     <button @click="login">Login</button>
   </div>
