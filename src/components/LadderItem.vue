@@ -52,7 +52,8 @@
         return (this.getTotalGames - this.getWins);
       },
       getWinPercentage: function() {
-        return Number((this.getWins / this.getTotalGames) * 100).toFixed(1);
+        const percentage = Number((this.getWins / this.getTotalGames) * 100).toFixed(1);
+        return (isNaN(percentage)) ? 0 : percentage;
       }
     },
   }

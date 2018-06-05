@@ -1,12 +1,12 @@
 <template>
-  <div class="game-card" v-if="!hidden">
+  <div class="game-card">
     <div class="header" :class="{ selected: selected }">
       <h5 class="countries">{{ game.country_1 }} vs {{ game.country_2 }}</h5>
     </div>
     <div class="game-card-body">
       <div class="game-info">
         <div>
-          <p>Game {{ game.game }}<span v-if="!timeLeft"> - Played</span></p>
+          <p>Game {{ game.game }}</p>
           <p class="datetime">{{ game.datetime | moment('timezone', 'Australia/Perth', "dddd, Do MMM, h:mma") }}</p>
           <p class="stadium">{{ game.stadium }}</p>
         </div>
@@ -15,11 +15,15 @@
         </div>
       </div>
       <div class="game-picker">
-        <p v-if="selected" class="selected-item" :class="winnerPicked()">Selected {{ selected }}</p> 
-        <div class="btn-group" v-if="!selected && timeLeft">
+        <p v-if="selected" class="selected-item" :class="winnerPicked()">Selected {{ selected }}</p>
+        <p v-else class="selected-none">None</p> 
+        <div class="btn-group" v-if="timeLeft">
           <button type="button" class="btn btn-primary" @click="selectCountry(game.country_1)">{{ game.country_1 }}</button>
           <button type="button" class="btn btn-primary draw" @click="selectCountry('Draw')">Draw</button>
           <button type="button" class="btn btn-primary" @click="selectCountry(game.country_2)">{{ game.country_2 }}</button>
+        </div>
+        <div class="game-played" v-else>
+          <span v-if="!timeLeft">Game Played</span>
         </div>
       </div>
     </div>
@@ -43,7 +47,7 @@
     },
     methods: {
       addSelection: function() {
-        if (!this.timeLeft) return;
+        if (!this.timeLeft || !this.selected || !this.selection) return;
         let obj = {};
         obj[this.game.game] = this.selected;
         const email = this.email.replace(/\./g, '*');
@@ -142,7 +146,25 @@
       }
     }
 
+    .selected-none {
+      background: #8b8d8f;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      width: 100%;
+      margin: 0;
+    }
   }
+
+  .game-played {
+    background: darken(#3287b8, 5%);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin: 0;
+  }
+
   .game-info {
     display: flex;
     justify-content: space-between;
