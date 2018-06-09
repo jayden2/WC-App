@@ -89,7 +89,7 @@
         if (moment() < moment(this.game.datetime)) {
           return time = true;
         } else {
-          obj[`${this.game.game}`] = false;
+          obj[`${this.game.game}`] = true;
           db.ref('locked').update(obj);
           return time = false;
         }
