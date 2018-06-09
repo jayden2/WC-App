@@ -16,14 +16,14 @@
       </div>
       <div class="game-picker">
         <p v-if="selected" class="selected-item" :class="winnerPicked()">Selected {{ selected }}</p>
-        <p v-else class="selected-none">None</p> 
-        <div class="btn-group" v-if="timeLeft">
+        <p v-else class="selected-none">None</p>
+        <div class="btn-group" v-if="winnerPicked() === '' && canSelect && !isLocked()">
           <button type="button" class="btn btn-primary" @click="selectCountry(game.country_1)">{{ game.country_1 }}</button>
           <button type="button" class="btn btn-primary draw" @click="selectCountry('Draw')">Draw</button>
           <button type="button" class="btn btn-primary" @click="selectCountry(game.country_2)">{{ game.country_2 }}</button>
         </div>
         <div class="game-played" v-else>
-          <span v-if="!timeLeft">Game Played</span>
+          <span>Game Played</span>
         </div>
       </div>
     </div>
@@ -37,29 +37,35 @@
 
   export default {
     name: 'GameSelectionItem',
-    props: ['game', 'email', 'winners',],
+    props: ['locked', 'game', 'email', 'winners',],
     data () {
       return {
         hidden: true,
         selected: null,
-        selection: null
+        selection: null,
+        canSelect: this.timeLeft(),
       }
     },
     methods: {
       addSelection: function() {
-        if (!this.timeLeft || !this.selected || !this.selection) return;
-        let obj = {};
-        obj[this.game.game] = this.selected;
-        const email = this.email.replace(/\./g, '*');
-        db.ref(`selections/${email}`).update(obj);
+        if (moment() < moment(this.game.datetime)) {
+          if (this.winnerPicked() === '') {
+            let obj = {};
+            obj[this.game.game] = this.selected;
+            const email = this.email.replace(/\./g, '*');
+            db.ref(`selections/${email}`).update(obj);
+          }
+        }
       },
       selectCountry: function(choice) {
-        this.selected = choice;
-        this.addSelection();
+        if (moment() < moment(this.game.datetime)) {
+          this.selected = choice;
+          this.addSelection();
+        }
       },
       winnerPicked: function() {
         let winLose = '';
-        if (this.winners.length && this.selected) {
+        if (this.winners.length) {
           this.winners.forEach(item => {
             if (item['.key'] === this.game.game) {
               return winLose = (this.selected === item['.value']) ? 'win' : 'lose';
@@ -68,13 +74,26 @@
         }
         return winLose;
       },
-    },
-    computed: {
+      isLocked: function() {
+        let lock = false;
+        this.locked.forEach(item => {
+          if (item['.key'] === this.game.game) {
+            return lock = (item['.value'] === true);
+          }
+        });
+        return lock;
+      },
       timeLeft: function() {
-        const date = moment(this.game.datetime);
-        const now = moment();
-
-        return (now > date) ? false : true;
+        let time = false;
+        let obj = {};
+        if (moment() < moment(this.game.datetime)) {
+          return time = true;
+        } else {
+          obj[`${this.game.game}`] = false;
+          db.ref('locked').update(obj);
+          return time = false;
+        }
+        return time;
       },
     },
     beforeMount: function() {
