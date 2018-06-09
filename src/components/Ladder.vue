@@ -99,4 +99,10 @@
       color: #007bff;
     }
   }
+  @media screen and (max-width: 768px) {
+    .table {
+      display: block;
+      overflow-x: scroll;
+    }
+  }
 </style>
