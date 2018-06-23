@@ -13,7 +13,7 @@
         <h2 class="title">Round 1</h2>
       </header>
       <div class="grid">
-        <game-selection-item :key="game.key" :locked="locked" :email="user.email" :winners="winners" :game="game" v-for="game in round1"></game-selection-item>
+        <game-selection-item :key="game.key" :locked="locked" :finals="false" :email="user.email" :winners="winners" :game="game" v-for="game in round1"></game-selection-item>
       </div>
     </section>
   </main>

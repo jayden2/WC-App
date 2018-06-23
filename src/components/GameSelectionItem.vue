@@ -19,7 +19,7 @@
         <p v-else class="selected-none">None</p>
         <div class="btn-group" v-if="winnerPicked() === '' && canSelect && !isLocked()">
           <button type="button" class="btn btn-primary" @click="selectCountry(game.country_1)">{{ game.country_1 }}</button>
-          <button type="button" class="btn btn-primary draw" @click="selectCountry('Draw')">Draw</button>
+          <button type="button" class="btn btn-primary draw" @click="selectCountry('Draw')" v-if="!finals">Draw</button>
           <button type="button" class="btn btn-primary" @click="selectCountry(game.country_2)">{{ game.country_2 }}</button>
         </div>
         <div class="game-played" v-else>
@@ -37,7 +37,7 @@
 
   export default {
     name: 'GameSelectionItem',
-    props: ['locked', 'game', 'email', 'winners',],
+    props: ['locked', 'game', 'email', 'winners', 'finals'],
     data () {
       return {
         hidden: true,
