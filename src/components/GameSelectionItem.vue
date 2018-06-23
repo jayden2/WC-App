@@ -1,5 +1,5 @@
 <template>
-  <div class="game-card">
+  <div class="game-card" v-if="bothCountriesAvailable()">
     <div class="header" :class="{ selected: selected }">
       <h5 class="countries">{{ game.country_1 }} vs {{ game.country_2 }}</h5>
     </div>
@@ -94,6 +94,9 @@
           return time = false;
         }
         return time;
+      },
+      bothCountriesAvailable: function() {
+        return (this.game.country_1.length <= 3 || this.game.country_2.length <= 3) ? false : true;
       },
     },
     beforeMount: function() {
