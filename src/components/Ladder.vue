@@ -118,7 +118,7 @@
     margin-top: 15px;
   }
   tbody {
-    tr > td {
+    .table td, .table th {
       border-top: none;
     }
 
