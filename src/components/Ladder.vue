@@ -6,10 +6,10 @@
           <th scope="col">#</th>
           <th scope="col"><a href="#" @click="sortByName">User</a></th>
           <th scope="col" class="text-center">Played(Selected)</th>
-          <th scope="col" class="text-center"><a href="#" @click="sortByPoints">Won</a></th>
+          <th scope="col" class="text-center"><a href="#" @click="sortByWins">Won</a></th>
           <th scope="col" class="text-center"><a href="#" @click="sortByLost">Lost</a></th>
           <th scope="col" class="text-center">WP</th>
-          <!-- <th scope="col" class="text-center"><a href="#" @click="sortByPoints">Total Points</a></th> -->
+          <th scope="col" class="text-center"><a href="#" @click="sortByPoints">Total Points</a></th>
         </tr>
       </thead>
       <tbody :class="sortType">

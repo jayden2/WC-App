@@ -3,10 +3,10 @@
     <th>{{ index + 1 }}</th>
     <td>{{ user }}</td>
     <td class="text-center">{{ getTotalGames }} ({{ selections.length }})</td>
-    <td class="text-center">{{ getPoints }}</td>
+    <td class="text-center">{{ getWins }}</td>
     <td class="text-center">{{ getLoses }}</td>
     <td class="text-center">{{ getWinPercentage }}%</td>
-    <!-- <td class="text-center">{{ getPoints }}</td> -->
+    <td class="text-center">{{ getPoints }}</td>
   </tr>
 </template>
 
