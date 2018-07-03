@@ -16,7 +16,6 @@
         <ladder-item @pointsAmount="pointsAmountChild" @winAmount="winAmountChild" :key="selectUser['.key']" :selectedUser="selectUser['.key']" :winners="winners" :index="index" v-for="(selectUser, index) in basicSelection"></ladder-item>
       </tbody>
     </table>
-    <button v-if="sortType == 'wins'" class="christian-button btn" @click="sortByChristian">c</button>
   </main>
 </template>
 
